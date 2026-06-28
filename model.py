@@ -43,8 +43,20 @@ def sample_input_features(key, batch_size, num_features):
     # TODO: draw a batch of random input feature vectors from the PRNG key
     return sample_normal_matrix(key, (batch_size, num_features))
 
-# Step 5 - assign_class_labels (not yet solved)
-# TODO: implement
+# Step 5 - assign_class_labels
+import jax.numpy as jnp
+
+
+def assign_class_labels(inputs, num_classes):
+    """Turns a feature matrix into a vector of integer class labels
+
+    by taking the argmax over the first num_classes columns.
+    """
+    # Slice the inputs to keep only the first num_classes columns: shape (batch_size, num_classes)
+    relevant_features = inputs[:, :num_classes]
+
+    # Take the argmax across the columns (axis=1) and cast to int32
+    return jnp.argmax(relevant_features, axis=1).astype(jnp.int32)
 
 # Step 6 - one_hot_encode_labels (not yet solved)
 # TODO: implement
