@@ -197,8 +197,14 @@ def compute_param_grads(params, x, one_hot_targets):
     # Evaluate the gradient function on the current inputs
     return grad_fn(params, x, one_hot_targets)
 
-# Step 18 - sgd_update_params (not yet solved)
-# TODO: implement
+# Step 18 - sgd_update_params
+import jax
+
+
+def sgd_update_params(params, grads, learning_rate):
+    """Applies one functional SGD step to every parameter in the pytree."""
+    # jax.tree.map walks through both pytrees simultaneously and applies the function to their leaves
+    return jax.tree.map(lambda p, g: p - learning_rate * g, params, grads)
 
 # Step 19 - training_step (not yet solved)
 # TODO: implement
