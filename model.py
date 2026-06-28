@@ -166,8 +166,13 @@ def cross_entropy_loss(logits, one_hot_targets):
     # 3. Take the average loss across the entire batch
     return jnp.mean(per_sample_loss)
 
-# Step 15 - classification_accuracy (not yet solved)
-# TODO: implement
+# Step 15 - classification_accuracy
+import jax.numpy as jnp
+
+def classification_accuracy(logits, labels):
+    """Fraction of rows where argmax(logits) equals the integer label."""
+    # TODO: compute predicted classes from logits and compare to labels
+    return jnp.mean(jnp.argmax(logits, axis=-1) == labels)
 
 # Step 16 - loss_fn_of_params (not yet solved)
 # TODO: implement
