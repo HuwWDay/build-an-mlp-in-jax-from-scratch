@@ -80,8 +80,26 @@ def init_linear_layer(key, in_dim, out_dim, scale=0.1):
     return {"W": scale*sample_normal_matrix(key, (in_dim, out_dim)), 
     "b": jnp.zeros(out_dim)}
 
-# Step 8 - init_mlp_params (not yet solved)
-# TODO: implement
+# Step 8 - init_mlp_params
+def init_mlp_params(key, layer_sizes, scale=0.1):
+    """Builds a list of per-layer parameter dicts from adjacent layer sizes."""
+    n = len(layer_sizes)
+
+    # We need exactly (n - 1) keys since there are (n - 1) transitions between layers
+    keys = jax.random.split(key, num=n-1)
+
+    params = []
+    for i in range(n - 1):
+        # Initialize the layer using the designated subkey
+        layer_param = init_linear_layer(
+            key=keys[i],
+            in_dim=layer_sizes[i],
+            out_dim=layer_sizes[i + 1],
+            scale=scale,
+        )
+        params.append(layer_param)
+
+    return params
 
 # Step 9 - linear_forward (not yet solved)
 # TODO: implement
