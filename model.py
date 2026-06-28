@@ -206,8 +206,29 @@ def sgd_update_params(params, grads, learning_rate):
     # jax.tree.map walks through both pytrees simultaneously and applies the function to their leaves
     return jax.tree.map(lambda p, g: p - learning_rate * g, params, grads)
 
-# Step 19 - training_step (not yet solved)
-# TODO: implement
+# Step 19 - training_step
+import jax
+import jax.numpy as jnp
+
+
+def training_step(params, x, one_hot_targets, learning_rate):
+    """Executes a single training iteration.
+
+    Computes current loss + grads via upstream helpers, applies a functional
+    SGD update to the parameters, and returns both the new parameters and the
+    loss.
+    """
+    # 1. Compute the loss value for tracking
+    loss = loss_fn_of_params(params, x, one_hot_targets)
+
+    # 2. Compute the gradients of the loss with respect to the parameters
+    grads = compute_param_grads(params, x, one_hot_targets)
+
+    # 3. Apply the functional SGD update to get a fresh parameter pytree
+    updated_params = sgd_update_params(params, grads, learning_rate)
+
+    # 4. Return both the updated weights and the loss scalar
+    return updated_params, loss
 
 # Step 20 - train_mlp (not yet solved)
 # TODO: implement
