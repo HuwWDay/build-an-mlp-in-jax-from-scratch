@@ -230,8 +230,13 @@ def training_step(params, x, one_hot_targets, learning_rate):
     # 4. Return both the updated weights and the loss scalar
     return updated_params, loss
 
-# Step 20 - train_mlp (not yet solved)
-# TODO: implement
+# Step 20 - train_mlp
+def train_mlp(params, x, one_hot_targets, learning_rate, num_epochs):
+    """Run num_epochs full-batch SGD updates and return the final params."""
+    # TODO: run num_epochs full-batch SGD updates via training_step and return final params
+    for epoch in range(num_epochs):
+        params, loss = training_step(params, x, one_hot_targets, learning_rate)
+    return params
 
 # Step 21 - predict_classes (not yet solved)
 # TODO: implement
