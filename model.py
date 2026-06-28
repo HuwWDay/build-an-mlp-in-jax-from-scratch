@@ -174,8 +174,14 @@ def classification_accuracy(logits, labels):
     # TODO: compute predicted classes from logits and compare to labels
     return jnp.mean(jnp.argmax(logits, axis=-1) == labels)
 
-# Step 16 - loss_fn_of_params (not yet solved)
-# TODO: implement
+# Step 16 - loss_fn_of_params
+import jax
+import jax.numpy as jnp
+
+def loss_fn_of_params(params, x, one_hot_targets):
+    # TODO: return scalar cross-entropy loss as a function of params, ready for jax.grad
+    logits = mlp_forward(params, x)
+    return cross_entropy_loss(logits, one_hot_targets)
 
 # Step 17 - compute_param_grads (not yet solved)
 # TODO: implement
