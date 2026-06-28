@@ -153,8 +153,18 @@ def log_softmax_logits(logits):
     e = jnp.log(jnp.sum(jnp.exp(logits-m), axis = -1, keepdims = True))
     return logits - m - e
 
-# Step 14 - cross_entropy_loss (not yet solved)
-# TODO: implement
+# Step 14 - cross_entropy_loss
+def cross_entropy_loss(logits, one_hot_targets):
+    """Computes the mean cross-entropy between predicted logits and one_hot_targets."""
+    # 1. Compute stable log probabilities
+    log_probs = log_softmax_logits(logits)
+
+    # 2. Multiply element-wise by targets to mask out incorrect classes,
+    # then sum across the class dimension (axis=-1) to get loss per sample
+    per_sample_loss = -jnp.sum(one_hot_targets * log_probs, axis=-1)
+
+    # 3. Take the average loss across the entire batch
+    return jnp.mean(per_sample_loss)
 
 # Step 15 - classification_accuracy (not yet solved)
 # TODO: implement
