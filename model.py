@@ -183,8 +183,19 @@ def loss_fn_of_params(params, x, one_hot_targets):
     logits = mlp_forward(params, x)
     return cross_entropy_loss(logits, one_hot_targets)
 
-# Step 17 - compute_param_grads (not yet solved)
-# TODO: implement
+# Step 17 - compute_param_grads
+import jax
+import jax.numpy as jnp
+
+
+def compute_param_grads(params, x, one_hot_targets):
+    """Computes the gradients of the cross-entropy loss with respect to params."""
+    # Use jax.grad to transform the function into a gradient calculator.
+    # grad_fn will have the exact same call signature as loss_fn_of_params.
+    grad_fn = jax.grad(loss_fn_of_params)
+
+    # Evaluate the gradient function on the current inputs
+    return grad_fn(params, x, one_hot_targets)
 
 # Step 18 - sgd_update_params (not yet solved)
 # TODO: implement
